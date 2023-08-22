@@ -18,6 +18,7 @@ namespace ConsoleApp4
 				{
 					password += random.Next(0, 9).ToString();
 				}
+				Console.ForegroundColor = ConsoleColor.Green;
 				Console.WriteLine("!Ваш пароль, не кому не сообщайте: " + password);
 				//password[2] = "u";
 				return password;
@@ -41,20 +42,24 @@ namespace ConsoleApp4
 
 			public string AccountInfo()
 			{
+				Console.ForegroundColor = ConsoleColor.DarkRed;
 				Console.WriteLine($"имя пользователя: {this.userName}\nномер карты: {this.cardNumber}");
 				return "";
 			}
 
 			public string Balance()
 			{
+				Console.ForegroundColor = ConsoleColor.Cyan;
 				Console.Write("введите пароль карты чтобы посмотреть количество денег :");
 				string answer = Console.ReadLine();
 				if (answer == this.password)
 				{
+					Console.ForegroundColor = ConsoleColor.Cyan;
 					Console.WriteLine($"ваши деньги на карточке {this.money}");
 				}
 				else
 				{
+					Console.ForegroundColor = ConsoleColor.Cyan;
 					Console.WriteLine("пароль не верный "); 
 				}
 				return "";
@@ -65,10 +70,12 @@ namespace ConsoleApp4
 		{
 			int createPassword()
 			{
+				Console.ForegroundColor = ConsoleColor.Red;
 				Console.WriteLine("Какой длины вы хотите пароль:");
 				int passwordLength = int.Parse(Console.ReadLine());
 				if (passwordLength < 3)
 				{
+					Console.ForegroundColor = ConsoleColor.Red;
 					Console.WriteLine("Ваш пароль слишком короткий минимальная длина три символа");
 					createPassword();
 				}
