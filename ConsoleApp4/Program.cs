@@ -60,7 +60,7 @@ namespace ConsoleApp4
 				else
 				{
 					Console.ForegroundColor = ConsoleColor.Cyan;
-					Console.WriteLine("пароль не верный "); 
+					Console.WriteLine("пароль не верный ");
 				}
 				return "";
 			}
@@ -87,7 +87,7 @@ namespace ConsoleApp4
 				{
 					Console.WriteLine("Ваш пароль средний");
 				}
-				if (passwordLength >= 11 && passwordLength <= 15)
+				if (passwordLength >= 11)
 				{
 					Console.WriteLine("Ваш пароль тяжёлый");
 				}
@@ -108,17 +108,14 @@ namespace ConsoleApp4
 				}
 				if (userAnswer == "info")
 				{
-					Console.WriteLine("Это ваша информация о аккаунте" + bank.AccountInfo());		
+					Console.WriteLine("Это ваша информация о аккаунте" + bank.AccountInfo());
 				}
 				if (userAnswer == "money")
 				{
 					Console.WriteLine("Это ваши деньги на аккаунте " + bank.Balance());
 				}
 			}
-			
+
 		}
 	}
 }
-/*Сделать меню 
-bank.AccountInfo();
-bank.Balance();*/
