@@ -6,3 +6,6 @@ C:\Users\User\source\repos\ConsoleApp4\ConsoleApp4\obj\Debug\ConsoleApp4.csproj.
 C:\Users\User\source\repos\ConsoleApp4\ConsoleApp4\obj\Debug\ConsoleApp4.csproj.CoreCompileInputs.cache
 C:\Users\User\source\repos\ConsoleApp4\ConsoleApp4\obj\Debug\ConsoleApp4.exe
 C:\Users\User\source\repos\ConsoleApp4\ConsoleApp4\obj\Debug\ConsoleApp4.pdb
+C:\Users\User\source\repos\ConsoleApp4\ConsoleApp4\obj\Debug\ConsoleApp4.Account1.resources
+C:\Users\User\source\repos\ConsoleApp4\ConsoleApp4\obj\Debug\ConsoleApp4.BankAccount.resources
+C:\Users\User\source\repos\ConsoleApp4\ConsoleApp4\obj\Debug\ConsoleApp4.csproj.GenerateResource.cache

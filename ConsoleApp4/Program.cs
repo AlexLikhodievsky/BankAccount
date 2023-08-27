@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing.Drawing2D;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
 
 namespace ConsoleApp4
@@ -27,6 +29,7 @@ namespace ConsoleApp4
 
 		class UserAccount : BankAccount
 		{
+			public string path = @"C:\BankAccount\cardInfo.txt";
 			public string cardNumber = null;
 			public string userName = null;
 			public string password = null;
@@ -39,7 +42,6 @@ namespace ConsoleApp4
 				this.password = this.GeneratePassword(passwordLength);
 				this.money = money;
 			}
-
 			public string AccountInfo()
 			{
 				Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -47,7 +49,19 @@ namespace ConsoleApp4
 				return "";
 			}
 
-			public string Balance()
+			public void CreateFileInfo()
+			{
+				File.Create(path).Close();
+				File.WriteAllText(path, ReturnFileInfo());				
+			
+			}
+
+			public string ReturnFileInfo()
+			{
+				return $"имя пользователя: {this.userName}\nномер карты: {this.cardNumber}";
+			}
+
+				public string Balance()
 			{
 				Console.ForegroundColor = ConsoleColor.Cyan;
 				Console.Write("введите пароль карты чтобы посмотреть количество денег :");
@@ -93,10 +107,9 @@ namespace ConsoleApp4
 				}
 				return passwordLength;
 			}
-
+			
 			UserAccount bank = new UserAccount("4325 5673 3647 9003", "Sasha", 23.57, createPassword());
-			/*bank.AccountInfo();
-			bank.Balance();*/
+			bank.CreateFileInfo();
 			while (true)
 			{
 				Console.WriteLine("Если вы хотите узнать информацию о банковском аккаунте введите info \nЕсли вы хотите узнать информацию о количестве денег на карте аккаунте введите money \nЕсли вы хотите выйти введите outp");
@@ -115,7 +128,6 @@ namespace ConsoleApp4
 					Console.WriteLine("Это ваши деньги на аккаунте " + bank.Balance());
 				}
 			}
-
 		}
 	}
 }
