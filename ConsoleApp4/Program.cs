@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 
 namespace ConsoleApp4
@@ -49,19 +50,29 @@ namespace ConsoleApp4
 				return "";
 			}
 
+			public void PutMoneyOnCard(int countMoney)
+			{
+				this.money += countMoney;
+			}
+
+			public void WithDrawMoneyFromCard(int countMoney2)
+			{
+				this.money -= countMoney2;
+			}
+
 			public void CreateFileInfo()
 			{
 				File.Create(path).Close();
-				File.WriteAllText(path, ReturnFileInfo());				
+				File.WriteAllText(path, "f");				
 			
 			}
-
+			
 			public string ReturnFileInfo()
 			{
 				return $"имя пользователя: {this.userName}\nномер карты: {this.cardNumber}";
 			}
 
-				public string Balance()
+			public string Balance()
 			{
 				Console.ForegroundColor = ConsoleColor.Cyan;
 				Console.Write("введите пароль карты чтобы посмотреть количество денег :");
@@ -107,12 +118,16 @@ namespace ConsoleApp4
 				}
 				return passwordLength;
 			}
-			
-			UserAccount bank = new UserAccount("4325 5673 3647 9003", "Sasha", 23.57, createPassword());
+
+			UserAccount bank = new UserAccount("4325 5673 3647 9003", "Sasha", 23, createPassword());
 			bank.CreateFileInfo();
 			while (true)
 			{
-				Console.WriteLine("Если вы хотите узнать информацию о банковском аккаунте введите info \nЕсли вы хотите узнать информацию о количестве денег на карте аккаунте введите money \nЕсли вы хотите выйти введите outp");
+				Console.WriteLine("Если вы хотите узнать информацию о банковском аккаунте введите info \n" +
+					"Если вы хотите узнать информацию о количестве денег на карте аккаунте введите money\n" +
+					"Если вы хотите положить деньги на карточку то введите putm\n" +
+					"Если вы хотите снять деньги с карточки то введите withdrawm \n" +
+					"Если вы хотите выйти введите outp");
 				string userAnswer = Console.ReadLine();
 				if (userAnswer == "outp")
 				{
@@ -122,6 +137,18 @@ namespace ConsoleApp4
 				if (userAnswer == "info")
 				{
 					Console.WriteLine("Это ваша информация о аккаунте" + bank.AccountInfo());
+				}
+				if (userAnswer == "putm")
+				{
+					Console.WriteLine("Введите сколько денег вы хотите положить на карту");
+					int putMoney = int.Parse(Console.ReadLine());
+					bank.PutMoneyOnCard(putMoney);
+				}
+				if (userAnswer == "withdrawm")
+				{
+					Console.WriteLine("Введите сколько денег вы хотите снять с карты");
+					int withdrawMoney = int.Parse(Console.ReadLine());
+					bank.WithDrawMoneyFromCard(withdrawMoney);
 				}
 				if (userAnswer == "money")
 				{
