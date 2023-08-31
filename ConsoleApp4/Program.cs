@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Drawing.Drawing2D;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
 
 namespace ConsoleApp4
 {
@@ -13,9 +10,6 @@ namespace ConsoleApp4
 			public string GeneratePassword(int passwordLength)
 			{
 				Random random = new Random();
-				string[] letters = new string[] {"A","B","C","D","E","F","G","H",
-				"I","J","K","L","M","N","O","P",
-				"Q","R","S","T","U","V","W","X","Y","Z" };
 				string password = "";
 				for (int i = 0; i < passwordLength; i++)
 				{
@@ -23,7 +17,6 @@ namespace ConsoleApp4
 				}
 				Console.ForegroundColor = ConsoleColor.Green;
 				Console.WriteLine("!Ваш пароль, не кому не сообщайте: " + password);
-				//password[2] = "u";
 				return password;
 			}
 		}
@@ -49,22 +42,42 @@ namespace ConsoleApp4
 				Console.WriteLine($"имя пользователя: {this.userName}\nномер карты: {this.cardNumber}");
 				return "";
 			}
-
 			public void PutMoneyOnCard(int countMoney)
 			{
+				if (countMoney > 999)
+				{
+					Console.WriteLine("Привышен лимит пополнения");
+					return;
+				}
+				if (countMoney < 0)
+				{
+					Console.WriteLine("Купюра несоотвествует подленности");
+					return;
+				}
 				this.money += countMoney;
+				
 			}
 
 			public void WithDrawMoneyFromCard(int countMoney2)
 			{
+				if (countMoney2 > this.money)
+				{
+					Console.WriteLine("У вас не достаточно средств");
+					return;
+				}
+				if (countMoney2 < 0)
+				{
+					Console.WriteLine("Купюра несоотвествует подленности");
+					return;
+				}
 				this.money -= countMoney2;
 			}
 
 			public void CreateFileInfo()
 			{
 				File.Create(path).Close();
-				File.WriteAllText(path, "f");				
-			
+				File.WriteAllText(path, ReturnFileInfo());
+
 			}
 			
 			public string ReturnFileInfo()
@@ -91,68 +104,77 @@ namespace ConsoleApp4
 			}
 		}
 
-		static void Main(string[] args)
+		static void Main()
 		{
 			int createPassword()
 			{
-				Console.ForegroundColor = ConsoleColor.Red;
-				Console.WriteLine("Какой длины вы хотите пароль:");
-				int passwordLength = int.Parse(Console.ReadLine());
-				if (passwordLength < 3)
+				while (true)
 				{
 					Console.ForegroundColor = ConsoleColor.Red;
-					Console.WriteLine("Ваш пароль слишком короткий минимальная длина три символа");
-					createPassword();
+					Console.WriteLine("Какой длины вы хотите пароль:");
+					int passwordLength = int.Parse(Console.ReadLine());
+					if (passwordLength < 3)
+					{
+						Console.ForegroundColor = ConsoleColor.Red;
+					    Console.WriteLine("Ваш пароль слишком короткий минимальная длина три символа");						
+					}
+					if (passwordLength >= 3 && passwordLength <= 5)
+					{
+						Console.WriteLine("Ваш пароль лёгкий");
+						return passwordLength;
+					}
+					if (passwordLength >= 6 && passwordLength <= 10)
+					{
+						Console.WriteLine("Ваш пароль средний");
+						return passwordLength;
+					}
+					if (passwordLength >= 11)
+					{
+						Console.WriteLine("Ваш пароль тяжёлый");
+						return passwordLength;
+					}
 				}
-				if (passwordLength >= 3 && passwordLength <= 5)
-				{
-					Console.WriteLine("Ваш пароль лёгкий");
-				}
-				if (passwordLength >= 6 && passwordLength <= 10)
-				{
-					Console.WriteLine("Ваш пароль средний");
-				}
-				if (passwordLength >= 11)
-				{
-					Console.WriteLine("Ваш пароль тяжёлый");
-				}
-				return passwordLength;
-			}
+			}				
 
 			UserAccount bank = new UserAccount("4325 5673 3647 9003", "Sasha", 23, createPassword());
 			bank.CreateFileInfo();
 			while (true)
 			{
-				Console.WriteLine("Если вы хотите узнать информацию о банковском аккаунте введите info \n" +
-					"Если вы хотите узнать информацию о количестве денег на карте аккаунте введите money\n" +
-					"Если вы хотите положить деньги на карточку то введите putm\n" +
-					"Если вы хотите снять деньги с карточки то введите withdrawm \n" +
-					"Если вы хотите выйти введите outp");
+				Console.WriteLine("Если вы хотите узнать информацию о банковском аккаунте введите 1\n" +
+					"Если вы хотите узнать информацию о количестве денег на карте аккаунте введите 2\n" +
+					"Если вы хотите положить деньги на карточку то введите 3\n" +
+					"Если вы хотите снять деньги с карточки то введите 4\n" +
+					"Если вы хотите выйти введите 5");
 				string userAnswer = Console.ReadLine();
-				if (userAnswer == "outp")
-				{
-					Console.WriteLine("Вы успешно вышли");
-					break;
-				}
-				if (userAnswer == "info")
+
+				if (userAnswer == "1")
 				{
 					Console.WriteLine("Это ваша информация о аккаунте" + bank.AccountInfo());
 				}
-				if (userAnswer == "putm")
+
+				if (userAnswer == "2")
+				{
+					Console.WriteLine("Это ваши деньги на аккаунте " + bank.Balance());
+				}
+
+				if (userAnswer == "3")
 				{
 					Console.WriteLine("Введите сколько денег вы хотите положить на карту");
 					int putMoney = int.Parse(Console.ReadLine());
 					bank.PutMoneyOnCard(putMoney);
 				}
-				if (userAnswer == "withdrawm")
+
+				if (userAnswer == "4")
 				{
 					Console.WriteLine("Введите сколько денег вы хотите снять с карты");
 					int withdrawMoney = int.Parse(Console.ReadLine());
 					bank.WithDrawMoneyFromCard(withdrawMoney);
 				}
-				if (userAnswer == "money")
+
+				if (userAnswer == "5")
 				{
-					Console.WriteLine("Это ваши деньги на аккаунте " + bank.Balance());
+					Console.WriteLine("Вы успешно вышли");
+					break;
 				}
 			}
 		}
