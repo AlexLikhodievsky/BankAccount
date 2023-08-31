@@ -36,12 +36,14 @@ namespace ConsoleApp4
 				this.password = this.GeneratePassword(passwordLength);
 				this.money = money;
 			}
+
 			public string AccountInfo()
 			{
 				Console.ForegroundColor = ConsoleColor.DarkRed;
 				Console.WriteLine($"имя пользователя: {this.userName}\nномер карты: {this.cardNumber}");
 				return "";
 			}
+
 			public void PutMoneyOnCard(int countMoney)
 			{
 				if (countMoney > 999)
@@ -49,6 +51,7 @@ namespace ConsoleApp4
 					Console.WriteLine("Привышен лимит пополнения");
 					return;
 				}
+
 				if (countMoney < 0)
 				{
 					Console.WriteLine("Купюра несоотвествует подленности");
@@ -65,6 +68,7 @@ namespace ConsoleApp4
 					Console.WriteLine("У вас не достаточно средств");
 					return;
 				}
+
 				if (countMoney2 < 0)
 				{
 					Console.WriteLine("Купюра несоотвествует подленности");
@@ -95,11 +99,13 @@ namespace ConsoleApp4
 					Console.ForegroundColor = ConsoleColor.Cyan;
 					Console.WriteLine($"ваши деньги на карточке {this.money}");
 				}
+
 				else
 				{
 					Console.ForegroundColor = ConsoleColor.Cyan;
 					Console.WriteLine("пароль не верный ");
 				}
+
 				return "";
 			}
 		}
@@ -113,21 +119,25 @@ namespace ConsoleApp4
 					Console.ForegroundColor = ConsoleColor.Red;
 					Console.WriteLine("Какой длины вы хотите пароль:");
 					int passwordLength = int.Parse(Console.ReadLine());
+
 					if (passwordLength < 3)
 					{
 						Console.ForegroundColor = ConsoleColor.Red;
 					    Console.WriteLine("Ваш пароль слишком короткий минимальная длина три символа");						
 					}
+
 					if (passwordLength >= 3 && passwordLength <= 5)
 					{
 						Console.WriteLine("Ваш пароль лёгкий");
 						return passwordLength;
 					}
+
 					if (passwordLength >= 6 && passwordLength <= 10)
 					{
 						Console.WriteLine("Ваш пароль средний");
 						return passwordLength;
 					}
+
 					if (passwordLength >= 11)
 					{
 						Console.WriteLine("Ваш пароль тяжёлый");
@@ -173,7 +183,7 @@ namespace ConsoleApp4
 
 				if (userAnswer == "5")
 				{
-					Console.WriteLine("Вы успешно вышли");
+					Console.WriteLine("Вы успешно вышли!");
 					break;
 				}
 			}
